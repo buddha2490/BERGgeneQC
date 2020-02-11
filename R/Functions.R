@@ -440,6 +440,7 @@ PlinkQC <- function(home){
 
 
 # Program 5 - BAFPlots() - B-allele plots ----------------------------------------------
+
 BAFPlots <- function(home){
 
   require(ggplot2)
