@@ -5,16 +5,16 @@
     "dirty" : false,
     "encoding" : "ISO8859-1",
     "folds" : "5|26|22|0|\n30|28|201|0|\n205|53|258|0|\n259|53|440|0|\n467|43|472|2|\n476|0|480|2|\n482|27|484|2|\n529|0|531|4|\n",
-    "hash" : "0",
+    "hash" : "2305808296",
     "id" : "8B079E8",
-    "lastKnownWriteTime" : 1581453074,
-    "last_content_update" : 1581453074713,
+    "lastKnownWriteTime" : 1581453179,
+    "last_content_update" : 1581453179670,
     "path" : "~/OneDrive - American Cancer Society/Rdata/My R Packages/BERGgeneQC/R/Functions.R",
     "project_path" : "R/Functions.R",
     "properties" : {
-        "cursorPosition" : "458,2",
+        "cursorPosition" : "523,33",
         "docOutlineVisible" : "0",
-        "scrollLine" : "451"
+        "scrollLine" : "508"
     },
     "relative_order" : 1,
     "source_on_save" : false,
