@@ -77,7 +77,8 @@ GSProcess <- function(home){
     one$MergeVar <- sub(".txt","",one$Files)
     two$MergeVar <- sub(".RDS","",two$Files)
 
-    joined <- full_join(dplyr::select(one, MergeVar, Files, Path, Type, origTime = Time, Batch),
+    joined <- dplyr::full_join(
+                        dplyr::select(one, MergeVar, Files, Path, Type, origTime = Time, Batch),
                         dplyr::select(two, MergeVar, newTime = Time),
                         "MergeVar")
     joined$Convert <- with(joined, ifelse(
