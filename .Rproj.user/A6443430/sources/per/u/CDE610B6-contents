@@ -1,0 +1,9 @@
+src <- file.path("Z:/CPS3/Carriers Data - 10Feb2020")
+
+df <- data.table::fread(file.path(src,"SampleID.imiss"))
+head(df)
+
+df$IID2 <- substr(df$IID, 1,10)
+df <- dplyr::select(df, ID = IID2, IID)
+write.table(df, file.path(src, "Carriers_CPS3_SampleIDs - 10Feb2020.txt"),
+            sep="\t", col.names=T, row.names=F, quote=T)

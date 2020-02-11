@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581357523666.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "351294615",
+    "id" : "5C1BFD4",
+    "lastKnownWriteTime" : 1569595681,
+    "last_content_update" : 1569595681,
+    "path" : "C:/Users/BrianCarter/OneDrive - American Cancer Society/Genetics/Smoking GWAS/Programs/Old/Visually inspect IBD pairs.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

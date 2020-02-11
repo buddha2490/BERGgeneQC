@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581432880405.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "909918369",
+    "id" : "2A8C77E3",
+    "lastKnownWriteTime" : 1581433674,
+    "last_content_update" : 1581433674899,
+    "path" : "~/OneDrive - American Cancer Society/Rdata/My R Packages/BERGgeneQC/man/movePlink.Rd",
+    "project_path" : "man/movePlink.Rd",
+    "properties" : {
+        "cursorPosition" : "48,1",
+        "scrollLine" : "32",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}

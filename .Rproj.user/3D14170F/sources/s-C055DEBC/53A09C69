@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581433086767.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "53A09C69",
+    "lastKnownWriteTime" : 1581433642,
+    "last_content_update" : 1581433642119,
+    "path" : "~/OneDrive - American Cancer Society/Rdata/My R Packages/BERGgeneQC/man/PlinkQC.Rd",
+    "project_path" : "man/PlinkQC.Rd",
+    "properties" : {
+        "cursorPosition" : "39,0",
+        "scrollLine" : "28",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}

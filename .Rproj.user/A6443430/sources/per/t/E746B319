@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581356494619.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "13|65|37|0|\n16|26|35|0|\n38|54|212|0|\n213|51|266|0|\n267|52|449|0|\n",
+    "hash" : "866768580",
+    "id" : "E746B319",
+    "lastKnownWriteTime" : 1581362197,
+    "last_content_update" : 1581362197180,
+    "path" : "C:/Users/BrianCarter/OneDrive - American Cancer Society/Rdata/My R Packages/BERGgeneQC/R/Functions.R",
+    "project_path" : "R/Functions.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
