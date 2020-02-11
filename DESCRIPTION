@@ -1,11 +1,21 @@
 Package: BERGgeneQC
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Processing GenomeStudio output in the BERG
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Brian Carter
+Maintainer: Brian Carter <brian.carter@cancer.org>
+Description: This package is a collection of functions for processing GenomeStudio output files.
+License: None
+Depends:
+	dplyr
+	data.table
+	plinkQC
+	parallel
+	ggplot2
+	ggpubr
+	gridExtra
+	sys
+Imports:	
+Remotes: 
 Encoding: UTF-8
 LazyData: true
