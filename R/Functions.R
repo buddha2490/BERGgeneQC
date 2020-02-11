@@ -1,23 +1,4 @@
 
-# 0.  Program 0 - load the packages ---------------------------------------
-getPackages <- function(){
-  packages <- installed.packages()
-  need <- c("dplyr","data.table","plinkQC","parallel",
-            "ggplot2","ggpubr","gridExtra")
-  lapply(need, function(x){
-    if (!x %in% packages) { install.packages(x) }
-  })
-  library(dplyr)
-  library(data.table)
-  library(plinkQC)
-  library(parallel)
-  library(ggplot2)
-  library(ggpubr)
-  library(gridExtra)
-  library(sys)
-}
-
-
 
 # 1.  Program 1 - makeOrg() - directory connections -----------------------------------
 #  Goal is to create the output directories I need
@@ -150,7 +131,7 @@ GSProcess <- function(home){
                     GenTrain = GenTrain.Score)
 
     # Merge annotation and the GenTrain score
-    df3 <- left_join(df,df2,"SNP") %>%
+    df3 <- dplyr::left_join(df,df2,"SNP") %>%
       dplyr::select(SNP, Chromosome, Position, HWE_p, MAF, GenTrain,
                     Alleles, Strand)
 
@@ -459,6 +440,8 @@ PlinkQC <- function(home){
 # Program 5 - BAFPlots() - B-allele plots ----------------------------------------------
 BAFPlots <- function(home){
 
+  require(ggplot2)
+
   # Define the file paths
   files <- file.path(home,"BAF","Files")
   plots <- file.path(home,"BAF","Figures")
@@ -568,10 +551,10 @@ BAFPlots <- function(home){
             plot.title = element_text(size = 10, hjust = 0))
 
     # Arrange them on one page
-    g3 <- ggarrange(g1, g2, ncol = 1)
+    g3 <- ggpubr::ggarrange(g1, g2, ncol = 1)
 
     # Save the figure to the plots folder
-    ggsave(file.path(plots,batch,filename), g3, device = "png",
+    ggplot2::ggsave(file.path(plots,batch,filename), g3, device = "png",
            height = 6, width = 11, dpi = 250)
 
     # Return the summary statistic - useful for exclusions
