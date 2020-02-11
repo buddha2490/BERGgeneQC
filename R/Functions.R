@@ -359,7 +359,7 @@ PlinkQC <- function(home){
     }
     rm(ibd, IID)
 
-    samplesQC <- Reduce(function(x,y) full_join(x,y,"IID"),
+    samplesQC <- Reduce(function(x,y) dplyr::full_join(x,y,"IID"),
                         list(imiss, het, ibd_Pairs))
 
 

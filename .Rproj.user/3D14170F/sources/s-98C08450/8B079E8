@@ -4,17 +4,17 @@
     "created" : 1581431424800.000,
     "dirty" : false,
     "encoding" : "ISO8859-1",
-    "folds" : "5|26|22|0|\n38|57|67|2|\n209|28|255|0|\n278|23|287|4|\n346|41|351|4|\n464|43|469|2|\n473|44|477|2|\n479|43|481|2|\n526|58|528|4|\n",
-    "hash" : "3537343362",
+    "folds" : "5|26|22|0|\n30|28|201|0|\n38|57|67|2|\n205|53|258|0|\n278|23|287|4|\n346|41|351|4|\n464|43|469|2|\n473|44|477|2|\n479|43|481|2|\n526|58|528|4|\n",
+    "hash" : "2844475514",
     "id" : "8B079E8",
-    "lastKnownWriteTime" : 1581439092,
-    "last_content_update" : 1581439092476,
+    "lastKnownWriteTime" : 1581439842,
+    "last_content_update" : 1581439842589,
     "path" : "~/OneDrive - American Cancer Society/Rdata/My R Packages/BERGgeneQC/R/Functions.R",
     "project_path" : "R/Functions.R",
     "properties" : {
-        "cursorPosition" : "80,24",
+        "cursorPosition" : "361,45",
         "docOutlineVisible" : "0",
-        "scrollLine" : "70"
+        "scrollLine" : "345"
     },
     "relative_order" : 1,
     "source_on_save" : false,
