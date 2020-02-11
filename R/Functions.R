@@ -456,8 +456,9 @@ BAFPlots <- function(home){
     sub(".RDS","",.)
 
   # Create the file.paths for each batch
-  plotsDir <- list.dirs(plots)
+  plotsDir <- list.dirs(plots, full.names=F)
   batch <- samplesBatch$batch[!samplesBatch$batch %in% plotsDir]
+
   lapply(batch, function(x) dir.create(file.path(plots,x)))
 
   # Get the list of files that need to be processed

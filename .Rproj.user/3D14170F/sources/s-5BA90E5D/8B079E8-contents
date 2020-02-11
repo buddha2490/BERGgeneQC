@@ -440,6 +440,7 @@ PlinkQC <- function(home){
 
 
 # Program 5 - BAFPlots() - B-allele plots ----------------------------------------------
+
 BAFPlots <- function(home){
 
   require(ggplot2)
@@ -455,8 +456,9 @@ BAFPlots <- function(home){
     sub(".RDS","",.)
 
   # Create the file.paths for each batch
-  plotsDir <- list.dirs(plots)
+  plotsDir <- list.dirs(plots, full.names=F)
   batch <- samplesBatch$batch[!samplesBatch$batch %in% plotsDir]
+
   lapply(batch, function(x) dir.create(file.path(plots,x)))
 
   # Get the list of files that need to be processed
@@ -467,6 +469,7 @@ BAFPlots <- function(home){
     mybatch <- x[["batch"]]
     foo <- readRDS(file.path(processed,x[["File"]]))
     foo$Batch <- mybatch
+    foo$Sample_ID <- sub("-",".",foo$Sample_ID)
     return(dplyr::select(foo, Sample_ID, BarcodeID, Batch))
   })
   names(filelist)
@@ -557,7 +560,7 @@ BAFPlots <- function(home){
 
     # Save the figure to the plots folder
     ggplot2::ggsave(file.path(plots,batch,filename), g3, device = "png",
-           height = 6, width = 11, dpi = 250)
+                    height = 6, width = 11, dpi = 250)
 
     # Return the summary statistic - useful for exclusions
     return(data.frame(Sample_ID = Sample_ID, BafMess = CNV))
