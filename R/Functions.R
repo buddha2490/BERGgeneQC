@@ -467,6 +467,7 @@ BAFPlots <- function(home){
     mybatch <- x[["batch"]]
     foo <- readRDS(file.path(processed,x[["File"]]))
     foo$Batch <- mybatch
+    foo$Sample_ID <- sub("-",".",foo$Sample_ID)
     return(dplyr::select(foo, Sample_ID, BarcodeID, Batch))
   })
   names(filelist)
@@ -557,7 +558,7 @@ BAFPlots <- function(home){
 
     # Save the figure to the plots folder
     ggplot2::ggsave(file.path(plots,batch,filename), g3, device = "png",
-           height = 6, width = 11, dpi = 250)
+                    height = 6, width = 11, dpi = 250)
 
     # Return the summary statistic - useful for exclusions
     return(data.frame(Sample_ID = Sample_ID, BafMess = CNV))
