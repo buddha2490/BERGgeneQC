@@ -6,16 +6,15 @@ Author: Brian Carter
 Maintainer: Brian Carter <brian.carter@cancer.org>
 Description: This package is a collection of functions for processing GenomeStudio output files.
 License: None
-Depends:
-	dplyr
-	data.table
-	plinkQC
-	parallel
-	ggplot2
-	ggpubr
-	gridExtra
-	sys
-Imports:	
+Imports:
+	dplyr,
+	data.table,
+	plinkQC,
+	parallel,
+	ggplot2,
+	ggpubr,
+	gridExtra,
+	sys 	
 Remotes: 
 Encoding: UTF-8
 LazyData: true
