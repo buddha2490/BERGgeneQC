@@ -393,6 +393,7 @@ PlinkQC <- function(home){
                     list(maf,hwe,miss))
 
 
+
     # Move everything to the output folder
     move()
     rm(het,hwe,ibd_Pairs,imiss,maf,miss)
