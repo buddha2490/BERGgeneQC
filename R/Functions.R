@@ -522,7 +522,7 @@ BAFPlots <- function(home){
     # Define my messy statistic
     df2$PropMess <- ifelse(is.na(df2$BAF), NA, ifelse(
       df2$BAF >0.9 | df2$BAF < .1, 1, ifelse(
-        df$BAF > 0.4 & df2$BAF < 0.6, 1, 2)))
+        df$BAF > 0.6 & df2$BAF < 0.4, 1, 2)))
 
     # This is the percentage of SNPs with CNV problems - add it to a subtitle
     CNV <- nrow(df2[df2$PropMess == 2 & !is.na(df2$PropMess),]) / nrow(df2)
