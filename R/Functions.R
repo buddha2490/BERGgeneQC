@@ -389,7 +389,7 @@ PlinkQC <- function(home){
     miss <- data.table::fread(file.path(batchdir,paste0(batch,".lmiss"))) %>%
       dplyr::select(SNP, PropMissing = F_MISS)
 
-    SNPQC <- Reduce(function(x,y) full_join(x,y,"SNP"),
+    SNPQC <- Reduce(function(x,y) dplyr::full_join(x,y,"SNP"),
                     list(maf,hwe,miss))
 
 
