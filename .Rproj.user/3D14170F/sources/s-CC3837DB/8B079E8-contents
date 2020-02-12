@@ -582,3 +582,158 @@ BAFPlots <- function(home){
     saveRDS(BAFStats[[x]], file=file.path(home,"BAF",paste0(x,"_BAF.RDS")))
   })
 }
+
+
+
+# Program 6. finalReport() - create summary QC files ----------------------
+finalReport <- function(home){
+
+
+
+
+  # Define file paths
+  output <- file.path(home,"Summary Reports")
+  processed <- file.path(home,"Processed files")
+  plink <- file.path(home,"PLINK")
+  BAF <- file.path(home,"BAF")
+
+
+  # Get the batches I need to process
+  batches <- list.dirs(plink, recursive=F, full.names=F)
+
+  # Subset out the ones I've already completed
+  summaryFiles <- list.files(output) %>%
+    sub("_FinalReport.RDS","",.)
+  batches <- batches[!batches %in% summaryFiles]
+
+  # Run the reports for all batches
+  reports <- lapply(batches, function(x){
+    fulldata <- paste0("FullDataTable_",x,".RDS")
+    samplesdata <- paste0("Samples_",x,".RDS")
+    SNPTable <- paste0("SNPTable_",x,".RDS")
+    plinkFile <- paste0(x,"_QC.Rdata")
+    BAFFile <- paste0(x,"_BAF.RDS")
+    samplesdata <- readRDS(file.path(processed,samplesdata))
+    SNPTable <- readRDS(file.path(processed,SNPTable))
+    load(file.path(plink,plinkFile)) # called SampleSNP_QC - PLINK Reports
+    sampleQC <- SampleSNP_QC$SampleQC
+    SNPQC <- SampleSNP_QC$SNPQC
+    rm(SampleSNP_QC)
+    BAFFile <- readRDS(file.path(BAF,BAFFile))
+    BAFFile$Sample_ID <- as.character(BAFFile$Sample_ID)
+
+
+    head(samplesdata) # Sample_ID, CR, p10_GC, Barcode, Position
+    head(sampleQC) # IID Geno_Rate HET_Z, HighIBD, PI_HAT, Flag(exclusion)
+
+    # Step 1 - merge the Sample QC files
+    sampleQC <- full_join(
+      select(samplesdata, -CR),
+      select(sampleQC, Sample_ID = IID,
+             Geno_Rate,
+             Heterozygosity_Z = HET_Z,
+             HighIBD, PI_HAT, Flag),
+      "Sample_ID") %>%
+      full_join(.,BAFFile, "Sample_ID")
+
+
+    # Summary statistics
+    averageCR <- mean(sampleQC$Geno_Rate, na.rm=T)
+    averagep10GC <- mean(sampleQC$p10_GC, na.rm=T)
+    averageBAF <- mean(sampleQC$BafMess, na.rm=T)
+
+
+    # Exclusion table (add some exclusions to what is already done):
+    sampleQC$exclusion <- with(sampleQC, ifelse(
+      BafMess > 0.2, 1, ifelse(
+        Geno_Rate < 0.95, 2, ifelse(
+          abs(Heterozygosity_Z) >= 3, 3, ifelse(
+            !is.na(HighIBD), 4, 6)))))
+    sampleQC$exclusion[averageCR < 0.95] <- 5
+    sampleQC$exclusion <- factor(sampleQC$exclusion,
+                                 levels = 1:6,
+                                 labels=c("BAF > 0.2", "Call rate <0.95",
+                                          ">3SD Heterozygosity",
+                                          "High IBD Pair", "Plate fail: Avg CR < 0.95",
+                                          "Good sample"))
+
+    exclusion <- table(sampleQC$exclusion, useNA="ifany") %>%
+      data.frame(stringsAsFactors=F)
+    names(exclusion) <- c("Exclusion", "N")
+    exclusion$Exclusion <- as.character(exclusion$Exclusion)
+    exclusion <- rbind(c(paste0("Total in batch ",x), sum(exclusion$N)),
+                       exclusion)
+
+    sample_exclusion <- data.frame(Group = c("Samples Exclusion", rep(NA, nrow(exclusion))),
+                                   rbind(NA, exclusion),
+                                   stringsAsFactors=F)
+    rm(exclusion)
+
+    # Step 2 - SNP QC
+    SNPQC <- full_join(SNPTable,
+                       select(SNPQC, SNP,
+                              PLINK_MAF = MAF,
+                              PLINK_HWE = HWE_P,
+                              PropMissing,
+                              Flag),
+                       "SNP")
+
+    # Use the averagep10GC to find the lowest 10% of gene scores for the batch
+
+    SNPQC$Exclusion <- with(SNPQC, ifelse(
+      GenTrain < averagep10GC, 1, ifelse(
+        PLINK_HWE < 10e-5, 2, ifelse(
+          PropMissing > 0.05, 3, ifelse(
+            MAF < 0.01, 4, 5))))) %>%
+      factor(levels = 1:5,
+             labels = c("<10th percentile GS",
+                        "HWE < 10e-5",
+                        "Missing > 0.05",
+                        "MAF < 0.01",
+                        "Good sample"))
+
+    exclusion <- table(SNPQC$Exclusion, useNA="ifany") %>%
+      data.frame(stringsAsFactors=F)
+    names(exclusion) <- c("Exclusion", "N")
+    exclusion$Exclusion <- as.character(exclusion$Exclusion)
+    exclusion <- rbind(c(paste0("Total SNPs in batch ",x), sum(exclusion$N)),
+                       exclusion)
+
+    SNP_exclusion <- data.frame(Group = c("SNP Exclusion", rep(NA, nrow(exclusion))),
+                                rbind(NA, exclusion),
+                                stringsAsFactors=F)
+
+    exclusions <- rbind(sample_exclusion, SNP_exclusion)
+
+    lst <- list(
+      SummaryReport = exclusions,
+      SampleSummary = sampleQC,
+      SNPSummary = SNPQC
+    )
+
+    filename <- paste0(x,"_FinalReport.RDS")
+    saveRDS(lst, file = file.path(output,filename))
+    return(exclusions)  # Just want to return the summary table
+  })
+  names(reports) <- batches
+  return(reports)
+}
+
+
+
+
+
+
+
+
+
+# Program 7 - QCPipeline() - run the pipeline (wrapper) -------------------
+QCPipeline <- function(home){
+  # Run the pipeline functions
+  makeOrg(home)
+  GSProcess(home)
+  movePlink(home)
+  PlinkQC(home)
+  BAFPlots(home)
+}
+

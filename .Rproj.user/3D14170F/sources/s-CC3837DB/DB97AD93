@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581530017980.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "DB97AD93",
+    "lastKnownWriteTime" : 1581530232,
+    "last_content_update" : 1581530232117,
+    "path" : "~/OneDrive - American Cancer Society/Rdata/My R Packages/BERGgeneQC/man/QCPipeline.Rd",
+    "project_path" : "man/QCPipeline.Rd",
+    "properties" : {
+        "cursorPosition" : "39,24",
+        "scrollLine" : "32",
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}
