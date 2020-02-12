@@ -460,8 +460,9 @@ BAFPlots <- function(home){
     sub("_BAF.RDS","",.)
   batch <- samplesBatch$batch[!samplesBatch$batch %in% plotsDir]
 
+  supresswarnings(
   lapply(batch, function(x) dir.create(file.path(plots,x)))
-
+  )
   # Get the list of files that need to be processed
   samplesBatch <- dplyr::filter(samplesBatch, batch %in% batch)
 
