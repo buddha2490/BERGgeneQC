@@ -627,14 +627,14 @@ finalReport <- function(home){
     head(sampleQC) # IID Geno_Rate HET_Z, HighIBD, PI_HAT, Flag(exclusion)
 
     # Step 1 - merge the Sample QC files
-    sampleQC <- full_join(
-      select(samplesdata, -CR),
-      select(sampleQC, Sample_ID = IID,
+    sampleQC <- dplyr::full_join(
+      dplyr::select(samplesdata, -CR),
+      dplyr::select(sampleQC, Sample_ID = IID,
              Geno_Rate,
              Heterozygosity_Z = HET_Z,
              HighIBD, PI_HAT, Flag),
       "Sample_ID") %>%
-      full_join(.,BAFFile, "Sample_ID")
+      dplyr::full_join(.,BAFFile, "Sample_ID")
 
 
     # Summary statistics
@@ -670,8 +670,8 @@ finalReport <- function(home){
     rm(exclusion)
 
     # Step 2 - SNP QC
-    SNPQC <- full_join(SNPTable,
-                       select(SNPQC, SNP,
+    SNPQC <- dplyr::full_join(SNPTable,
+                       dplyr::select(SNPQC, SNP,
                               PLINK_MAF = MAF,
                               PLINK_HWE = HWE_P,
                               PropMissing,
