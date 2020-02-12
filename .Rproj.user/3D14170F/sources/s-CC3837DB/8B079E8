@@ -4,17 +4,17 @@
     "created" : 1581431424800.000,
     "dirty" : false,
     "encoding" : "ISO8859-1",
-    "folds" : "2|52|24|0|\n5|26|22|0|\n25|54|204|0|\n30|28|201|0|\n32|53|99|0|\n38|57|67|2|\n51|46|53|4|\n72|55|91|2|\n100|35|114|0|\n101|39|111|2|\n115|31|143|0|\n116|36|140|2|\n144|29|200|4|\n146|36|200|2|\n166|40|168|4|\n174|46|183|4|\n190|40|195|4|\n205|53|258|0|\n209|28|255|0|\n219|28|254|2|\n259|53|440|0|\n260|26|437|0|\n265|31|429|2|\n278|23|287|4|\n281|28|285|6|\n346|41|351|4|\n534|58|536|4|\n576|37|578|4|\n590|53|731|0|\n591|30|722|0|\n612|41|719|2|\n732|56|742|0|\n733|29|740|0|\n",
-    "hash" : "1769948348",
+    "folds" : "2|52|24|0|\n25|54|204|0|\n205|53|258|0|\n259|53|440|0|\n533|58|535|4|\n575|37|577|4|\n589|53|730|0|\n731|56|741|0|\n",
+    "hash" : "0",
     "id" : "8B079E8",
-    "lastKnownWriteTime" : 1581531965,
-    "last_content_update" : 1581531965317,
+    "lastKnownWriteTime" : 1581532217,
+    "last_content_update" : 1581532217237,
     "path" : "~/OneDrive - American Cancer Society/Rdata/My R Packages/BERGgeneQC/R/Functions.R",
     "project_path" : "R/Functions.R",
     "properties" : {
-        "cursorPosition" : "464,3",
+        "cursorPosition" : "462,76",
         "docOutlineVisible" : "0",
-        "scrollLine" : "449"
+        "scrollLine" : "452"
     },
     "relative_order" : 1,
     "source_on_save" : false,
