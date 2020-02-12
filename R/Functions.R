@@ -579,8 +579,10 @@ BAFPlots <- function(home){
   })
   # Save summary statistic for each batch
   lapply(names(BAFStats), function(x){
+    if (!is.null(BAFStats[[x]])){
     saveRDS(BAFStats[[x]], file=file.path(home,"BAF",paste0(x,"_BAF.RDS")))
-  })
+    }
+      })
 }
 
 
