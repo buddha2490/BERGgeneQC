@@ -621,8 +621,9 @@ finalReport <- function(home){
       sampleQC <- SampleSNP_QC$SampleQC
       SNPQC <- SampleSNP_QC$SNPQC
       rm(SampleSNP_QC)
-    BAFFile <- readRDS(file.path(BAF,BAFFile))
-      BAFFile$Sample_ID <- as.character(BAFFile$Sample_ID)
+      BAFFile <- readRDS(file.path(BAF,BAFFile))
+      BAFFile$Sample_ID <- as.character(BAFFile$Sample_ID) %>%
+        sub(".","-",.,fixed=T)
 
 
     # Step 1 - merge the Sample QC files
@@ -719,13 +720,6 @@ SNPQC$Exclusion[is.na(SNPQC$Exclusion)] <- "Missing metrics"
   names(reports) <- batches
   return(reports)
 }
-
-
-
-
-
-
-
 
 
 # Program 7 - QCPipeline() - run the pipeline (wrapper) -------------------
