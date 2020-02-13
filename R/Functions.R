@@ -1,6 +1,6 @@
 
-##
-# 1.  Program 1 - makeOrg() - directory connections -----------------------------------
+
+# Program 1 - makeOrg() - directory connections -----------------------------------
 #  Goal is to create the output directories I need
 #  If the directories are already there, do nothing
 makeOrg <- function(home){
@@ -590,9 +590,6 @@ BAFPlots <- function(home){
 # Program 6. finalReport() - create summary QC files ----------------------
 finalReport <- function(home){
 
-
-
-
   # Define file paths
   output <- file.path(home,"Summary Reports")
   processed <- file.path(home,"Processed files")
@@ -610,23 +607,23 @@ finalReport <- function(home){
 
   # Run the reports for all batches
   reports <- lapply(batches, function(x){
-    fulldata <- paste0("FullDataTable_",x,".RDS")
+
+    # Filenames I need to load
     samplesdata <- paste0("Samples_",x,".RDS")
     SNPTable <- paste0("SNPTable_",x,".RDS")
     plinkFile <- paste0(x,"_QC.Rdata")
     BAFFile <- paste0(x,"_BAF.RDS")
+
+    # Read in the datasets
     samplesdata <- readRDS(file.path(processed,samplesdata))
     SNPTable <- readRDS(file.path(processed,SNPTable))
     load(file.path(plink,plinkFile)) # called SampleSNP_QC - PLINK Reports
-    sampleQC <- SampleSNP_QC$SampleQC
-    SNPQC <- SampleSNP_QC$SNPQC
-    rm(SampleSNP_QC)
+      sampleQC <- SampleSNP_QC$SampleQC
+      SNPQC <- SampleSNP_QC$SNPQC
+      rm(SampleSNP_QC)
     BAFFile <- readRDS(file.path(BAF,BAFFile))
-    BAFFile$Sample_ID <- as.character(BAFFile$Sample_ID)
+      BAFFile$Sample_ID <- as.character(BAFFile$Sample_ID)
 
-
-    head(samplesdata) # Sample_ID, CR, p10_GC, Barcode, Position
-    head(sampleQC) # IID Geno_Rate HET_Z, HighIBD, PI_HAT, Flag(exclusion)
 
     # Step 1 - merge the Sample QC files
     sampleQC <- dplyr::full_join(
@@ -659,6 +656,7 @@ finalReport <- function(home){
                                           "High IBD Pair", "Plate fail: Avg CR < 0.95",
                                           "Good sample"))
 
+    # Format an output exclusion table
     exclusion <- table(sampleQC$exclusion, useNA="ifany") %>%
       data.frame(stringsAsFactors=F)
     names(exclusion) <- c("Exclusion", "N")
@@ -666,7 +664,8 @@ finalReport <- function(home){
     exclusion <- rbind(c(paste0("Total in batch ",x), sum(exclusion$N)),
                        exclusion)
 
-    sample_exclusion <- data.frame(Group = c("Samples Exclusion", rep(NA, nrow(exclusion))),
+    sample_exclusion <- data.frame(Group = c("Samples Exclusion",
+                                             rep(NA, nrow(exclusion))),
                                    rbind(NA, exclusion),
                                    stringsAsFactors=F)
     rm(exclusion)
@@ -680,20 +679,19 @@ finalReport <- function(home){
                               Flag),
                        "SNP")
 
-    # Use the averagep10GC to find the lowest 10% of gene scores for the batch
+  # Exclusions
+  SNPQC$Exclusion <- with(SNPQC, ifelse(
+   GenTrain < averagep10GC, 1, ifelse(
+    PLINK_HWE < 1e-04, 2, ifelse(
+      PropMissing > 0.05, 3, ifelse(
+        MAF < 0.01, 4, 6))))) %>%
+  factor(levels = 1:6,
+         labels = c("<10th percentile GS", "HWE < 10e-5",
+                    "Missing > 0.05", "MAF < 0.01",
+                    "Missing metrics","Good sample"))
+SNPQC$Exclusion[is.na(SNPQC$Exclusion)] <- "Missing metrics"
 
-    SNPQC$Exclusion <- with(SNPQC, ifelse(
-      GenTrain < averagep10GC, 1, ifelse(
-        PLINK_HWE < 10e-5, 2, ifelse(
-          PropMissing > 0.05, 3, ifelse(
-            MAF < 0.01, 4, 5))))) %>%
-      factor(levels = 1:5,
-             labels = c("<10th percentile GS",
-                        "HWE < 10e-5",
-                        "Missing > 0.05",
-                        "MAF < 0.01",
-                        "Good sample"))
-
+    # Format exclusion table
     exclusion <- table(SNPQC$Exclusion, useNA="ifany") %>%
       data.frame(stringsAsFactors=F)
     names(exclusion) <- c("Exclusion", "N")
@@ -705,6 +703,7 @@ finalReport <- function(home){
                                 rbind(NA, exclusion),
                                 stringsAsFactors=F)
 
+    # Final output report tables
     exclusions <- rbind(sample_exclusion, SNP_exclusion)
 
     lst <- list(
